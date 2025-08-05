@@ -1,0 +1,84 @@
+{
+    "task": "Infrared_Visible_Fusion" //  classical image sr for x2/x3/x4. root/task/images-models-options
+    ,
+    "model": "plain" // "plain" | "plain2" if two inputs
+    ,
+    "gpu_ids": [0,1],
+    "dist": true,
+    "scale": 1 // 2 | 3 | 4
+    ,
+    "n_channels": 1 // broadcast to "datasets", 1 for grayscale, 3 for color
+    ,
+    "path": {
+      "root": "./Model" // "denoising" | "superresolution" | "dejpeg"
+      ,
+      "tensorboard": "./tf-logs",
+      "pretrained_netG": null // path of pretrained model. We fine-tune X3/X4 models from X2 model, so that `G_optimizer_lr` and `G_scheduler_milestones` can be halved to save time.
+      ,
+      "pretrained_netE": null // path of pretrained model
+    },
+    "datasets": {
+      "train": {
+        "name": "train_dataset" // just name
+        ,
+        "dataset_type": "vif" // "dncnn" | "dnpatch" | "fdncnn" | "ffdnet" | "sr" | "srmd" | "dpsr" | "plain" | "plainpatch" | "jpeg" |  "loe"
+        ,
+        "dataroot_A": "./train_image/infrared" // path of H training dataset. DIV2K (800 training images)
+        ,
+        "dataroot_B": "./train_image/visible" // path of L training dataset
+        ,
+        "crop_size": 256
+        ,
+        "resize_size":128 // 128/192/256/512.
+        ,
+        "dataloader_shuffle": true,
+        "dataloader_num_workers": 20,
+        "dataloader_batch_size": 24 //batch size
+      }
+    },
+    "netG": {
+      "net_type": "wmamba",
+      "in_chans": 1,
+      "img_range": 1.0,
+      "embed_dim": 192,
+      "init_type": "default"
+    },
+    "train": {
+      "G_lossfn_type": "vif" // "l1" preferred | "l2sum" | "l2" | "ssim" | "charbonnier"
+      ,
+      "G_lossfn_weight": 1.0 // default
+      ,
+      "E_decay": 0.999 // Exponential Moving Average for netG: set 0 to disable; default setting 0.999
+      ,
+      "G_optimizer_type": "adam" // fixed, adam is enough
+      ,
+      "G_optimizer_lr": 2.5e-5 // learning rate
+      ,
+      "epoch": 30,
+      "G_optimizer_wd": 0 // weight decay, default 0
+      ,
+      "G_optimizer_clipgrad": null // unused
+      ,
+      "G_optimizer_reuse": true // 
+      ,
+      "G_scheduler_type": "CosineAnnealingLR" // "MultiStepLR" is enough
+      ,
+      "G_scheduler_milestones": [
+        5,
+        10,
+        15
+      ],
+      "G_scheduler_gamma": 0.5,
+      "G_regularizer_orthstep": null // unused
+      ,
+      "G_regularizer_clipstep": null // unused
+      ,
+      "G_param_strict": true,
+      "E_param_strict": true,
+      "checkpoint_test": 1000 // for testing
+      ,
+      "checkpoint_save": 2 // for saving model
+      ,
+      "checkpoint_print": 100 // for print
+    }
+  }
