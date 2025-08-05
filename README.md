@@ -32,10 +32,8 @@ The images you use should be placed in:
 ```
 
 ## Pretrained Weights
-Our pretrained model has been placed in:
-```
-Model/Infrared_Visible_Fusion/models
-```
+Our pre-trained model is available at [Google Drive](https://drive.google.com/file/d/17j7baZJVsEko99_Rrcsv8YmRtsbtZPIH/view?usp=sharing).
+After downloading, please place the pre-trained model in ```Model/Infrared_Visible_Fusion/models```.
 
 ## Testing
 You can test the fusion performance of the model using the following command, after correctly placing the test images and the pretrained model:
@@ -54,7 +52,7 @@ Quantitative comparison examples are shown below. The red line denotes our metho
 ![Quantitative Comparison](fig/Quantitative.png)
 
 ## Training your own model
-Put your training data in the ```train_image/``` folder, and run:
+Put your training data in the ```train_image``` folder, and run:
 ```
 python Train.py
 ```
