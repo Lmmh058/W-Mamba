@@ -30,3 +30,43 @@ The images you use should be placed in:
                 infrared/
                 visible/
 ```
+
+## Pretrained Weights
+Our pretrained model has been placed in:
+```
+Model/Infrared_Visible_Fusion/models
+```
+
+## Testing
+You can test the fusion performance of the model using the following command, after correctly placing the test images and the pretrained model:
+```
+python Test.py
+```
+
+## Visual Results
+A few qualitative examples are shown below.
+
+![Qualitative_Comparison](fig/Qualitative.png)
+
+## Quantitative Results
+Quantitative comparison examples are shown below. The red line denotes our method, and all metrics favor higher values.
+
+![Quantitative Comparison](fig/Quantitative.png)
+
+## Training your own model
+Put your training data in the ```train_image/``` folder, and run:
+```
+python Train.py
+```
+Afterwards, your model will be placed in ```Model/Infrared_Visible_Fusion/models```.
+
+## Citation
+If our work contributes to your research, we would appreciate it if you could cite our paper:
+```
+@article{zhang2025exploring,
+  title={Exploring state space model in wavelet domain: An infrared and visible image fusion network via wavelet transform and state space model},
+  author={Zhang, Tianpei and Zhu, Yiming and Zhao, Jufeng and Cui, Guangmang and Zheng, Yuchen},
+  journal={arXiv preprint arXiv:2503.18378},
+  year={2025}
+}
+```
